@@ -20,6 +20,7 @@ export default {
     return { foods: [] };
   },
   mounted() {
+    this.$store.dispatch('fetchCarts')
     axios
       .get("https://634918dfa59874146b171fc0.mockapi.io/api/food")
       .then((response) => {

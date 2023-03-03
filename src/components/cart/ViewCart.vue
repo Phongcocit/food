@@ -67,28 +67,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import axios from "axios";
 import router from "@/router";
 export default {
+  computed: {
+    ...mapState(['carts'])
+  },
   data() {
     return {
-      carts: [],
+      // carts: [],
       items: [],
       isCheckPaid: false,
       totalQuantity: 0,
     };
   },
-  mounted() {
-    axios
-      .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
-      .then((response) => {
-        console.log(response);
-        this.carts = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  // mounted() {
+  //   axios
+  //     .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
+  //     .then((response) => {
+  //       console.log(response);
+  //       this.carts = response.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // },
   methods: {
     formatDate(dateString) {
       const date = new Date(dateString);

@@ -72,26 +72,33 @@
   </section>
 </template>
 <script>
-import axios from "axios";
+// import axios from "axios";
+import { mapState } from 'vuex'
+
+
 export default {
+  
+  
   data() {
     return {
-      carts: [],
+      // carts: [],
       items: [],
     };
   },
-  mounted() {
-    axios
-      .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
-      .then((response) => {
-        console.log(response);
-        this.carts = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  // mounted() {
+  //   axios
+  //     .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
+  //     .then((response) => {
+  //       console.log(response);
+  //       this.carts = response.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // },
   computed: {
+    ...mapState(['carts']),
+
     totalQuantity() {
       let sum = 0;
       this.carts.forEach((cart) => {

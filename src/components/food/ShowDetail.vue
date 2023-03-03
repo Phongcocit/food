@@ -42,16 +42,20 @@
 <script>
 import axios from "axios";
 import router from "@/router";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       food: {},
       quantity: 1,
-      carts: [],
+      // carts: [],
       unpaidCart: null,
       isCheckPaid: false,
     };
+  },
+  computed: {
+    ...mapState(["carts"]),
   },
   props: ["id"],
   mounted() {
@@ -63,22 +67,14 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    axios
-      .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
-      .then((response) => {
-        console.log(response);
-        this.carts = response.data;
-        this.carts.forEach((cart) => {
-          if (!cart.paid) {
-            console.log(cart.id);
-            this.unpaidCart = cart.id;
-            this.isCheckPaid = true;
-          }
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    this.carts.forEach((cart) => {
+      if (!cart.paid) {
+        console.log(cart.id);
+        this.unpaidCart = cart.id;
+        this.isCheckPaid = true;
+      }
+    });
 
     //tim gio hang chua duoc thang toan
     //gan gio hang chua duoc thanh toan vao unpaidCart
@@ -120,7 +116,7 @@ export default {
             .then((response) => {
               console.log(response.data.total);
               alert("Bạn đã thêm món ăn vào giỏ hàng thành công");
-            router.go(0);
+              router.go(0);
 
               console.log(response.data);
               this.quantity = 1;
@@ -129,7 +125,7 @@ export default {
               console.log(error);
               console.log("-------------------------");
               console.log(error.response.status); // in ra mã trạng thái HTTP của lỗi
-              console.log(error.response.data); // in ra thông báo lỗi từ server
+              console.log(error.response.data); //*  *// in ra thông báo lỗi từ server
               console.log("-------------------------");
             });
         })

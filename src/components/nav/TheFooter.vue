@@ -26,24 +26,24 @@
               <li><a href="#">Twitter</a></li>
             </ul>
           </div>
-          <h3 class="widget-title">Carts</h3>
+          <!-- <h3 class="widget-title">Carts</h3>
             <ul>
               <li v-for="cart in carts" :key="cart.id">
-                {{ cart.name }} - {{ cart.price }}
+                {{ cart.id }} - {{ cart.total }}
               </li>
-            </ul>
+            </ul> -->
         </div>
       </div>
     </footer>
   </template>
   <script>
-import { mapState } from 'vuex'
-export default{
-  name: 'TheFooter',
-  computed: {
-    ...mapState(['carts'])
-  }
-}
+// import { mapState } from 'vuex'
+// export default{
+//   name: 'TheFooter',
+//   computed: {
+//     ...mapState(['carts'])
+//   }
+// }
 </script>
   <style scoped>
   .footer {

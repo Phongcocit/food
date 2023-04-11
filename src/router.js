@@ -15,6 +15,7 @@ const router = createRouter({
       component: () => import("./components/food/ShowDetail.vue"),
       props: true
     },
+    {path:"/addfood", component:()=>import("./components/food/AddFood.vue")}
     
   ],
 });

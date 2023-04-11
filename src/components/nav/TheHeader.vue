@@ -7,18 +7,18 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
-  <!--  -->
+
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item">
-      <a class="navbar-item" >
-        <img
-          src="https://bulma.io/images/bulma-logo.png"
-          width="112"
-          height="28"
-        />
-      </a>
-    </router-link>
+        <a class="navbar-item">
+          <img
+            src="https://bulma.io/images/bulma-logo.png"
+            width="112"
+            height="28"
+          />
+        </a>
+      </router-link>
 
       <a
         role="button"
@@ -36,6 +36,7 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
         <router-link to="/" class="navbar-item"> Trang chủ </router-link>
+        <router-link to="/addfood" class="navbar-item"> Add Food </router-link>
       </div>
     </div>
 
@@ -48,15 +49,6 @@
           <i class="fa fa-shopping-cart fa-2x" style="color: red"></i>
           <span class="badge">{{ totalQuantity }}</span>
         </router-link>
-        <!-- <router-link to="/cart"
-          ><i class="fa fa-shopping-cart" style="font-size: 48px; color: red">
-            <p>{{ totalQuantity }}</p>
-          </i>
-        </router-link> -->
-
-        <!--  -->
-
-        <!--  -->
       </a>
     </div>
   </nav>
@@ -72,42 +64,24 @@
   </section>
 </template>
 <script>
-// import axios from "axios";
-import { mapState } from 'vuex'
-
+import { mapState } from "vuex";
 
 export default {
-  
-  
   data() {
     return {
-      // carts: [],
       items: [],
     };
   },
-  // mounted() {
-  //   axios
-  //     .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
-  //     .then((response) => {
-  //       console.log(response);
-  //       this.carts = response.data;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // },
   computed: {
-    ...mapState(['carts']),
+    ...mapState(["carts"]),
 
     totalQuantity() {
       let sum = 0;
       this.carts.forEach((cart) => {
         if (!cart.paid) {
-          console.log(cart.id);
 
           cart.items.forEach((item) => {
             sum += item.quantity;
-            console.log("--------------", item.quantity);
           });
         }
       });

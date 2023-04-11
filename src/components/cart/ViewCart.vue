@@ -6,14 +6,16 @@
     <table>
       <thead>
         <tr>
-          <th style="width: 25%">Ngày đặt hàng</th>
-          <th style="width: 25%">Tên mặt hàng</th>
-          <th style="width: 25%">Giá</th>
+          <th style="width: 15%">Ngày đặt hàng</th>
+          <th style="width: 15%">Tên mặt hàng</th>
+          <th style="width: 15%">Giá</th>
           <th style="width: 15%">Số lượng</th>
-          <th style="width: 15%">Tổng tiền </th>
+          <th style="width: 15%">Tổng tiền</th>
+          <th style="width: 15%">
+            {{ isCheckPaid ? "Xóa giỏ hàng" : "Xóa lịch sử mua hàng" }}
+          </th>
 
-
-          <th style="width: 25%">
+          <th style="width: 15%">
             {{
               isCheckPaid ? "Đơn hàng đã thanh toán" : "Tiến hành thanh toán"
             }}
@@ -49,11 +51,18 @@
                 </li>
               </ul>
             </td>
-            <td >{{ cart.total }} đ</td>
+            <td>{{ cart.total }} đ</td>
             <td v-if="cart.paid">OK</td>
             <td v-else>
               <button class="thanh-toan" @click="updateCart(cart.id)">
                 Thanh Toán
+              </button>
+            </td>
+            <td>
+              <button class="thanh-toan" @click="deleteCart(cart.id)">
+                {{
+                  isCheckPaid ? "Xóa" : "Hủy bỏ"
+                }}
               </button>
             </td>
           </template>
@@ -67,13 +76,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 import axios from "axios";
 import router from "@/router";
 export default {
   computed: {
-    ...mapState(['carts'])
+    ...mapState(["carts"]),
   },
   data() {
     return {
@@ -83,17 +92,17 @@ export default {
       totalQuantity: 0,
     };
   },
-  // mounted() {
-  //   axios
-  //     .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
-  //     .then((response) => {
-  //       console.log(response);
-  //       this.carts = response.data;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // },
+  mounted() {
+    axios
+      .get("https://634918dfa59874146b171fc0.mockapi.io/api/cart")
+      .then((response) => {
+        console.log(response);
+        this.carts = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   methods: {
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -125,7 +134,24 @@ export default {
           console.log(response.data);
           alert("Bạn đã thanh toán thành công");
           // window.location.reload();
-          router.go(0)
+          router.go(0);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteCart(id) {
+      axios
+        .delete(`https://634918dfa59874146b171fc0.mockapi.io/api/cart/${id}`, {
+          paid: true,
+        })
+        .then((response) => {
+          console.log(response.data);
+          alert("Bạn xóa thanh toán thành công");
+          // window.location.reload();
+
+          router.go(0);
+          
         })
         .catch((error) => {
           console.log(error);
@@ -149,7 +175,7 @@ th,
 td {
   border: 1px solid rgb(128, 117, 117);
   padding: 10px;
-  height: 60px;
+  height: 30px;
   text-align: center;
 }
 
@@ -164,7 +190,7 @@ td:first-child {
 
 td:nth-child(2),
 td:nth-child(3) {
-  width: 20%;
+  width: 10%;
 }
 
 td ul {
